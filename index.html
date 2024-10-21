@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>October 18, 2024</title>
+		<author>Chloe Yiu</author>
+		<!-- extension of the daily papers. accumulation of dots in a radial pattern. -->
+		<style>
+			body {
+				margin: 0;
+				height: 100vh;
+				overflow: hidden;
+				background-color: #f0f0f0;
+			}
+			.dot {
+				position: absolute;
+				width: 5px;
+				height: 5px;
+				background-color: #000;
+				border-radius: 50%;
+				transition: all 1s ease-out;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			let opacity = 0;
+			let dotCount = 0;
+
+			document.addEventListener("click", (e) => {
+				opacity += 0.1;
+				if (opacity > 1) opacity = 1;
+
+				const numDots = 20;
+				const radius = 50;
+
+				for (let i = 0; i < numDots; i++) {
+					const dot = document.createElement("div");
+					dot.className = "dot";
+					document.body.appendChild(dot);
+
+					const angle = (i / numDots) * 2 * Math.PI;
+					const x = e.clientX + radius * Math.cos(angle);
+					const y = e.clientY + radius * Math.sin(angle);
+
+					dot.style.left = `${x}px`;
+					dot.style.top = `${y}px`;
+					dot.style.opacity = opacity;
+
+					setTimeout(() => {
+						const endRadius = Math.max(
+							Math.hypot(x, y),
+							Math.hypot(x - window.innerWidth, y),
+							Math.hypot(x, y - window.innerHeight),
+							Math.hypot(x - window.innerWidth, y - window.innerHeight)
+						);
+
+						const endX = e.clientX + endRadius * Math.cos(angle);
+						const endY = e.clientY + endRadius * Math.sin(angle);
+
+						dot.style.left = `${endX}px`;
+						dot.style.top = `${endY}px`;
+						dot.style.opacity = "0.1";
+					}, 50);
+
+					dotCount++;
+				}
+
+				console.log(`Total dots: ${dotCount}`);
+			});
+		</script>
+	</body>
+</html>
