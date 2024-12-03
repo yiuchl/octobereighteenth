@@ -78,6 +78,12 @@
 
 				console.log(`Total dots: ${dotCount}`);
 			});
+
+			document.addEventListener("click", function () {
+				const clickSound = new Audio("./assets/bike.mp3");
+				clickSound.volume = 1;
+				clickSound.play();
+			});
 		</script>
 	</body>
 </html>
